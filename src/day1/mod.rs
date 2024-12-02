@@ -1,11 +1,11 @@
 use std::collections::HashMap;
 
-pub fn part1() {
-    let input = include_str!("./part-1.txt");
+const INPUT: &str = include_str!("./part-1.txt");
 
+pub fn part1() {
     let mut list_a: Vec<u32> = vec![];
     let mut list_b: Vec<u32> = vec![];
-    for line in input.lines() {
+    for line in INPUT.lines() {
         let mut split = line.split(' ');
         let a = split.next().unwrap();
         let b = split.last().unwrap();
@@ -24,11 +24,9 @@ pub fn part1() {
 }
 
 pub fn part2() {
-    let input = include_str!("./part-1.txt");
-
     let mut counts_left: HashMap<u32, u32> = HashMap::new();
     let mut counts_right: HashMap<u32, u32> = HashMap::new();
-    for line in input.lines() {
+    for line in INPUT.lines() {
         let mut split = line.split(' ');
         let a = split.next().unwrap().parse().unwrap();
         let b = split.last().unwrap().parse().unwrap();
