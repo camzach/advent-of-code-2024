@@ -1,8 +1,12 @@
 use std::collections::HashMap;
 
-const INPUT: &str = include_str!("./part-1.txt");
+const INPUT: &str = include_str!("input.txt");
+fn main() {
+    println!("Day 1 Part 1: {}", part1());
+    println!("Day 1 Part 2: {}", part2());
+}
 
-pub fn part1() {
+pub fn part1() -> u32 {
     let mut list_a: Vec<u32> = vec![];
     let mut list_b: Vec<u32> = vec![];
     for line in INPUT.lines() {
@@ -20,10 +24,10 @@ pub fn part1() {
         sum += a.abs_diff(b);
     }
 
-    println!("Day 1 Part 1: {sum}");
+    sum
 }
 
-pub fn part2() {
+pub fn part2() -> u32 {
     let mut counts_left: HashMap<u32, u32> = HashMap::new();
     let mut counts_right: HashMap<u32, u32> = HashMap::new();
     for line in INPUT.lines() {
@@ -42,5 +46,5 @@ pub fn part2() {
         }
     }
 
-    println!("Day 1 Part 2: {sum}");
+    sum
 }

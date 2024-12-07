@@ -1,8 +1,12 @@
-const INPUT: &str = include_str!("input.txt");
-
 use regex;
 
-pub fn part1() {
+const INPUT: &str = include_str!("input.txt");
+fn main() {
+    println!("Day 3 Part 1: {}", part1());
+    println!("Day 3 Part 2: {}", part2());
+}
+
+pub fn part1() -> i32 {
     let pattern = regex::Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
     let mut sum = 0;
     for captures in pattern.captures_iter(INPUT) {
@@ -10,10 +14,10 @@ pub fn part1() {
         let product = a.parse::<i32>().unwrap() * b.parse::<i32>().unwrap();
         sum += product;
     }
-    println!("Day 3 Part 1 {sum}");
+    sum
 }
 
-pub fn part2() {
+pub fn part2() -> i32 {
     let mul_pattern = regex::Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
     let do_pattern = regex::Regex::new(r"do()").unwrap();
     let dont_pattern = regex::Regex::new(r"don't()").unwrap();
@@ -37,5 +41,5 @@ pub fn part2() {
             enabled = false;
         }
     }
-    println!("Day 3 Part 2 {sum}");
+    sum
 }

@@ -1,4 +1,8 @@
-const INPUT: &str = include_str!("part-1.txt");
+const INPUT: &str = include_str!("input.txt");
+fn main() {
+    println!("Day 2 Part 1: {}", part1());
+    println!("Day 2 Part 2: {}", part2());
+}
 
 fn report_is_safe(report: Vec<i32>, damping: i32) -> bool {
     let mut is_ascending = false;
@@ -26,7 +30,7 @@ fn report_is_safe(report: Vec<i32>, damping: i32) -> bool {
     return true;
 }
 
-pub fn part1() {
+pub fn part1() -> i32 {
     let reports = INPUT.lines();
 
     let mut safe_reports = 0;
@@ -38,10 +42,10 @@ pub fn part1() {
             safe_reports += 1;
         }
     }
-    println!("Day 2 Part 1: {safe_reports}");
+    safe_reports
 }
 
-pub fn part2() {
+pub fn part2() -> i32 {
     let reports = INPUT.lines();
 
     let mut safe_reports = 0;
@@ -54,5 +58,5 @@ pub fn part2() {
             safe_reports += 1;
         }
     }
-    println!("Day 2 Part 2: {safe_reports}");
+    safe_reports
 }

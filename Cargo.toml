@@ -2,6 +2,8 @@
 name = "advent-of-code-2024"
 version = "0.1.0"
 edition = "2021"
+default-run = "advent-of-code-2024"
 
 [dependencies]
+chrono = "0.4.38"
 regex = "1.11.1"

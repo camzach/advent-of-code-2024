@@ -1,6 +1,10 @@
 const INPUT: &str = include_str!("input.txt");
+fn main() {
+    println!("Day 4 Part 1: {}", part1());
+    println!("Day 4 Part 2: {}", part2());
+}
 
-pub fn part1() {
+pub fn part1() -> i32 {
     let grid_width = INPUT.find('\n').unwrap() + 1;
 
     let strides = [1, grid_width, grid_width + 1, grid_width - 1];
@@ -37,10 +41,10 @@ pub fn part1() {
         }
     }
 
-    println!("Day 4 Part 1 {total}");
+    total
 }
 
-pub fn part2() {
+pub fn part2() -> i32 {
     let grid_width = INPUT.find('\n').unwrap() + 1;
 
     let mut total = 0;
@@ -71,5 +75,5 @@ pub fn part2() {
         }
     }
 
-    println!("Day 4 Part 2 {total}");
+    total
 }

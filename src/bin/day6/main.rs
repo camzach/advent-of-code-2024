@@ -1,6 +1,10 @@
 use std::collections::{HashMap, HashSet};
 
 const INPUT: &str = include_str!("input.txt");
+fn main() {
+    println!("Day 6 Part 1: {}", part1());
+    println!("Day 6 Part 2: {}", part2());
+}
 
 fn add_coords(pos: (usize, usize), dir: (isize, isize)) -> Option<(usize, usize)> {
     Some((
@@ -9,7 +13,7 @@ fn add_coords(pos: (usize, usize), dir: (isize, isize)) -> Option<(usize, usize)
     ))
 }
 
-pub fn part1() {
+pub fn part1() -> usize {
     let grid: Vec<Vec<char>> = INPUT
         .lines()
         .map(|line| line.trim().chars().collect())
@@ -48,10 +52,10 @@ pub fn part1() {
         }
     }
 
-    println!("Day 6 Part 1: {}", visited.len())
+    visited.len()
 }
 
-pub fn part2() {
+pub fn part2() -> i32 {
     let grid: Vec<Vec<char>> = INPUT
         .lines()
         .map(|line| line.trim().chars().collect())
@@ -139,5 +143,5 @@ pub fn part2() {
         }
     }
 
-    println!("Day 6 Part 2: {total}");
+    total
 }

@@ -4,6 +4,10 @@ use std::{
 };
 
 const INPUT: &str = include_str!("input.txt");
+fn main() {
+    println!("Day 5 Part 1: {}", part1());
+    println!("Day 5 Part 2: {}", part2());
+}
 
 fn update_is_ordered(update: &Vec<&str>, rules: &HashMap<&str, Vec<&str>>) -> bool {
     let mut pages_seen: HashSet<&str> = HashSet::new();
@@ -20,7 +24,7 @@ fn update_is_ordered(update: &Vec<&str>, rules: &HashMap<&str, Vec<&str>>) -> bo
     return true;
 }
 
-pub fn part1() {
+pub fn part1() -> i32 {
     let (rules, updates) = INPUT.split_once("\n\n").unwrap();
 
     let mut successor_map: HashMap<&str, Vec<&str>> = HashMap::new();
@@ -38,10 +42,10 @@ pub fn part1() {
             total += middle_page.parse::<i32>().unwrap();
         }
     }
-    println!("Day 5 Part 1: {total}");
+    total
 }
 
-pub fn part2() {
+pub fn part2() -> i32 {
     let (rules_text, updates) = INPUT.split_once("\n\n").unwrap();
 
     let mut rules: HashMap<&str, Vec<&str>> = HashMap::new();
@@ -68,5 +72,5 @@ pub fn part2() {
         }
     }
 
-    println!("Day 5 Part 2: {total}");
+    total
 }
