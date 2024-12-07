@@ -43,23 +43,20 @@ fn main() {
             };
         }
         "new" => {
-            let mut cmd = Command::new("sed");
             let day = Utc::now().naive_local().day();
-            cmd.args([format!("s/%DAY%/{}/", day).as_mut_str(), "template.txt"]);
-            match cmd.output() {
-                Ok(result) => {
-                    let dir_path = format!("./src/bin/day{}", day);
-                    let path = Path::new(dir_path.as_str());
-                    if path.exists() {
-                        println!("Directory for day {day} already exists");
-                        return;
-                    }
-                    create_dir_all(path).expect("Failed to create path");
-                    write(path.join("main.rs"), result.stdout).expect("Failed to write file");
-                    write(path.join("input.txt"), "").expect("Failed to create input.txt");
-                }
-                Err(_) => println!("Failed to fill out template"),
+            let template = include_str!("template.txt");
+            let contents = template.replace("%DAY%", day.to_string().as_str());
+
+            let dir_path = format!("./src/bin/day{}", day);
+            let path = Path::new(dir_path.as_str());
+            if path.exists() {
+                println!("Directory for day {day} already exists");
+                return;
             }
+
+            create_dir_all(path).expect("Failed to create path");
+            write(path.join("main.rs"), contents).expect("Failed to write file");
+            write(path.join("input.txt"), "").expect("Failed to create input.txt");
         }
         els => println!("Unexpected argument {els}"),
     }
