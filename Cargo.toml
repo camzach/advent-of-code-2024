@@ -6,4 +6,5 @@ default-run = "advent-of-code-2024"
 
 [dependencies]
 chrono = "0.4.38"
+itertools = "0.13.0"
 regex = "1.11.1"
