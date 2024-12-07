@@ -54,7 +54,6 @@ pub fn part2() -> i32 {
             line.split(' ').map(|n| n.parse::<i32>().unwrap()).collect(),
             1,
         ) {
-            println!("{line}");
             safe_reports += 1;
         }
     }
