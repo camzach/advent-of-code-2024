@@ -43,7 +43,11 @@ fn main() {
             };
         }
         "new" => {
-            let day = Utc::now().naive_local().day();
+            let day = Utc::now()
+                .naive_local()
+                .and_utc()
+                .with_timezone(&chrono::offset::Local)
+                .day();
             let template = include_str!("template.txt");
             let contents = template.replace("%DAY%", day.to_string().as_str());
 
