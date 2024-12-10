@@ -13,5 +13,7 @@ pkgs.mkShell {
     git
     rustc
     cargo
+    pkg-config
+    openssl
   ];
 }
