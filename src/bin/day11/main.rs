@@ -1,4 +1,4 @@
-use std::collections::{HashMap, VecDeque};
+use std::collections::HashMap;
 
 use itertools::Itertools;
 
@@ -37,72 +37,36 @@ pub fn part1() -> usize {
     row.len()
 }
 
-#[derive(Debug, Clone)]
-struct Stone {
-    timer: usize,
-    children: (u64, u64),
-}
-
-fn cached_stone(n: u64, cache: &mut HashMap<u64, Stone>) -> Stone {
-    if let Some(stone) = cache.get(&n) {
-        return stone.clone();
-    }
-    let mut t = 0;
-    let mut new_n = n;
-    if new_n == 0 {
-        new_n = 1;
-        t += 1;
-    }
-    while new_n.ilog10() % 2 == 0 {
-        new_n *= 2024;
-        t += 1;
-    }
-    let string = new_n.to_string();
-    let (left, right) = string.split_at(string.len() / 2);
-    let stone = Stone {
-        timer: t,
-        children: (left.parse().unwrap(), right.parse().unwrap()),
-    };
-    cache.insert(n, stone.clone());
-    stone
-}
-
-fn blink_unordered(row: &mut HashMap<u64, VecDeque<u64>>, cache: &mut HashMap<u64, Stone>) {
-    let mut new_stones = vec![];
-    for (stone, timer_counts) in row.iter_mut() {
-        let completed = timer_counts.pop_front().unwrap();
-        timer_counts.push_back(0);
-        if completed > 0 {
-            let stone = cached_stone(*stone, cache);
-            let (left, right) = stone.children;
-            new_stones.push((left, completed));
-            new_stones.push((right, completed));
+fn blink_unordered(row: &mut HashMap<u64, u64>) {
+    let mut new_stones: HashMap<u64, u64> = HashMap::new();
+    for (stone, count) in row.iter() {
+        if *stone == 0 {
+            *new_stones.entry(1).or_default() += *count;
+        } else if stone.ilog10() % 2 == 1 {
+            let string = stone.to_string();
+            let (left, right) = string.split_at(string.len() / 2);
+            *new_stones.entry(left.parse().unwrap()).or_default() += *count;
+            *new_stones.entry(right.parse().unwrap()).or_default() += *count;
+        } else {
+            *new_stones.entry(stone * 2024).or_default() += *count;
         }
     }
-    for (stone, count) in new_stones {
-        let timer = cached_stone(stone, cache).timer;
-        let row = row.entry(stone).or_default();
-        row.resize(timer + 1, 0);
-        row[timer] += count;
-    }
+    *row = new_stones;
 }
 
 pub fn part2() -> u64 {
-    let mut cache = HashMap::new();
-    let mut stones: HashMap<u64, VecDeque<u64>> = HashMap::new();
-    for (n, timer) in INPUT.trim().split_ascii_whitespace().map(|n| {
-        let n = n.parse::<u64>().unwrap();
-        let stone = cached_stone(n, &mut cache);
-        (n, stone.timer)
-    }) {
-        let counts = stones.entry(n).or_default();
-        counts.resize(timer + 1, 0);
-        counts[timer] += 1;
+    let mut stones: HashMap<u64, u64> = HashMap::new();
+    for stone in INPUT
+        .trim()
+        .split_ascii_whitespace()
+        .map(|n| n.parse::<u64>().unwrap())
+    {
+        *stones.entry(stone).or_default() += 1;
     }
 
     for _ in 0..75 {
-        blink_unordered(&mut stones, &mut cache);
+        blink_unordered(&mut stones);
     }
 
-    stones.values().flatten().sum()
+    stones.values().sum()
 }
