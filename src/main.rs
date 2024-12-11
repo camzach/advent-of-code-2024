@@ -22,6 +22,25 @@ struct Cli {
 enum Commands {
     Test { day: Option<u32> },
     New { day: Option<u32> },
+    Download { day: Option<u32> },
+}
+
+fn make_aoc_client(day: u32, input_path: Option<&Path>) -> AocClient {
+    let mut builder = AocClient::builder();
+
+    builder
+        .year(2024)
+        .expect("Invalid year")
+        .day(day)
+        .expect("Invalid day")
+        .session_cookie_from_file("cookie")
+        .expect("Failed to load session cookie");
+
+    if let Some(path) = input_path {
+        builder.input_filename(path);
+    }
+
+    builder.build().expect("Failed to connect to AoC")
 }
 
 fn main() {
@@ -55,19 +74,14 @@ fn main() {
                 return;
             }
 
-            let aoc_client = AocClient::builder()
-                .input_filename(path.join("input.txt"))
-                .year(2024)
-                .expect("Invalid year")
-                .day(day)
-                .expect("Invalid day")
-                .session_cookie_from_file("cookie")
-                .expect("Failed to load session cookie")
-                .build()
-                .expect("Failed to connect to AoC");
-
             create_dir_all(path).expect("Failed to create path");
             write(path.join("main.rs"), contents).expect("Failed to write file");
+        }
+        Commands::Download { day } => {
+            let day = day.unwrap_or(today);
+            let dir_path = format!("./src/bin/day{}", day);
+            let path = Path::new(dir_path.as_str());
+            let aoc_client = make_aoc_client(day, Some(&path.join("input.txt")));
             aoc_client
                 .save_input()
                 .expect("Failed to download puzzle input");
