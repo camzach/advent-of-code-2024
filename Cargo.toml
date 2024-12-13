@@ -9,4 +9,5 @@ aoc-client = "0.2.0"
 chrono = "0.4.38"
 clap = { version = "4.5.23", features = ["derive"] }
 itertools = "0.13.0"
+ndarray = "0.16.1"
 regex = "1.11.1"

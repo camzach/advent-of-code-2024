@@ -57,7 +57,12 @@ fn main() {
             cmd.args(["run", "--bin", format!("day{day}").as_str()]);
             match cmd.output() {
                 Ok(result) => {
-                    println!("{}", str::from_utf8(&result.stdout).unwrap())
+                    if result.stderr.len() > 0 {
+                        println!("{}", str::from_utf8(&result.stderr).unwrap());
+                    }
+                    if result.stdout.len() > 0 {
+                        println!("{}", str::from_utf8(&result.stdout).unwrap());
+                    }
                 }
                 Err(_) => println!("Command failed to execute"),
             };
