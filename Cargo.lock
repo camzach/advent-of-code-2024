@@ -22,6 +22,7 @@ name = "advent-of-code-2024"
 version = "0.1.0"
 dependencies = [
  "aoc-client",
+ "bmp",
  "chrono",
  "clap",
  "itertools",
@@ -159,6 +160,15 @@ name = "bitflags"
 version = "2.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b048fb63fd8b5923fc5aa7b340d8e156aec7ec02f0c78fa8a6ddc2613f6f71de"
+
+[[package]]
+name = "bmp"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "69985ff4f58085ac696454692d0b646a66ad1f9cc9be294c91dc51bb5df511ae"
+dependencies = [
+ "byteorder",
+]
 
 [[package]]
 name = "bumpalo"
